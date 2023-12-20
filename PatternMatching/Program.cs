@@ -4,6 +4,7 @@ namespace PatternMatching
 {
     internal class Program
     {
+        // driver
         static void Main(string[] args)
         {
             CharGroup number = new CharGroup('1');
@@ -32,6 +33,53 @@ namespace PatternMatching
             Console.WriteLine("TO REMOVE: " + testRemoval.ToString());
             test.RemoveDefinition(testRemoval.Definition);
             Console.WriteLine("AFTER: "+test.ToString());
+
+            CharGroup letter = new CharGroup('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+                                             'm','n','o','p','q','r','s','t','u','v','w','x','y','z');
+            CharGroup leftCarrot = new CharGroup('<');
+            CharGroup start = new CharGroup('\\');
+            CharGroup space = new CharGroup(' ');
+            CharGroup integers = new CharGroup('1', '2', '3');
+            CharGroup operators = new CharGroup('!', '>', '<', '.');
+
+            // pattern testing
+            string input = "remember cool the < html place of <! and such 3<html> so that<html style> ";
+            Pattern htmlTagPattern = new (operators, !operators);
+            htmlTagPattern.AddPrerequisite(space);
+            htmlTagPattern.AddTerminiator(space);
+            // space + operators
+
+            Console.WriteLine(test.ToString());
+            int testIndex = 0;
+
+            foreach(char c in input)
+            {
+                Console.WriteLine($"Processing Input[{testIndex}]: " + c);
+                htmlTagPattern.ProcessChar(c);
+                testIndex++;
+            }
+            Console.WriteLine("==================");
+            Console.WriteLine("OUTPUT:");
+            if (htmlTagPattern.MatchedBoundary.StartIndex<0)
+            {
+                Console.WriteLine("NO MATCH");
+            }
+            else
+            {
+                Console.WriteLine($"Match Boundaries ({htmlTagPattern.MatchedBoundary.StartIndex}:{htmlTagPattern.MatchedBoundary.EndIndex})");
+                Console.WriteLine($"Extracted Text: ");
+
+                for (int i = htmlTagPattern.MatchedBoundary.StartIndex; i <= htmlTagPattern.MatchedBoundary.EndIndex; i++)
+                {
+                    Console.Write($"[{i}:{input[i]}]");
+                }
+            }
+
+
+            Console.Write("\n\n\n\n");
+            
+
+
         }
     }
 }
