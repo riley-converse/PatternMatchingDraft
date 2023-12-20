@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic.CompilerServices;
@@ -16,7 +17,7 @@ namespace PatternMatching.Classes
 
         public CharGroup(params char[] definition)
         {
-            Definition = definition;
+            Definition = ClearArrayDuplicates(definition);
         }
 
         public void AppendDefinition(params char[] definition)
@@ -27,36 +28,50 @@ namespace PatternMatching.Classes
             Definition = new char[referenceTemp.Length + parameterTemp.Length];
             referenceTemp.CopyTo(Definition, 0);
             parameterTemp.CopyTo(Definition, referenceTemp.Length);
+
+            Definition = ClearArrayDuplicates(Definition);
         }
 
-        public void RemoveDefinition(params char[] definition)
+        public void RemoveDefinition(params char[] toRemove)
         {
             
-        }
-
-        /*private char[] ClearExistingDefinitions(params char[] definition)
-        {
-            char[] temp = definition;
+            char[] mainArray = Definition;
+            char[] secondaryArray;
+            secondaryArray = ClearArrayDuplicates(toRemove);
+            
+            bool foundMatch = false;
+            char[] temp = new char[mainArray.Length];
             int tempIndex = 0;
-            for (int i = 0; i < definition.Length; i++)
+            int matchCounter = 0;
+            for (int compareFromIndex=0; compareFromIndex< mainArray.Length; compareFromIndex++)
             {
-                if (!ContainsChar(definition[i]))
+                for (int compareToIndex = 0; compareToIndex < secondaryArray.Length; compareToIndex++)
                 {
-                    temp[tempIndex] = definition[i];
+                    if (mainArray[compareFromIndex] == secondaryArray[compareToIndex])
+                    {
+                        foundMatch = true;
+                        compareToIndex = secondaryArray.Length;
+                        matchCounter++;
+                    }
+                }
+                if (!foundMatch)
+                {
+                    temp[tempIndex] = mainArray[compareFromIndex];
                     tempIndex++;
                 }
+                foundMatch = false;
             }
 
-            temp.C
-            return temp.CopyTo()
-        }*/
+            Array.Resize(ref temp, mainArray.Length - matchCounter);
+            Definition = temp;
+        }
 
         public char[] ClearArrayDuplicates(params char[] charArray)
         {
             int arrayLength = charArray.Length;
             int appendIndex = 0;
             int matchCounter = 0;
-            char[] replacementArray = new char[arrayLength-1];
+            char[] replacementArray = new char[arrayLength];
             bool foundDuplicate = false;
 
             for (int compareFromIndex = 0; compareFromIndex < arrayLength; compareFromIndex++)
