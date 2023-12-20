@@ -34,6 +34,16 @@ namespace PatternMatching.Classes
             PStates = new List<IState>();
         }
 
+        public void AddCharGroup(params CharGroup[] definitions)
+        {
+            CharGroup[] referenceTemp = Definitions;
+            CharGroup[] parameterTemp = definitions;
+
+            Definitions = new CharGroup[referenceTemp.Length + parameterTemp.Length];
+            referenceTemp.CopyTo(Definitions, 0);
+            parameterTemp.CopyTo(Definitions, referenceTemp.Length);
+        }
+
         public void AddPrerequisite(CharGroup prequisite)
         {
             Prerequisite = prequisite;

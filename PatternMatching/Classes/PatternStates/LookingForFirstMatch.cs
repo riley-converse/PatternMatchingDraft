@@ -19,16 +19,17 @@ namespace PatternMatching.Classes.PatternStates
                 }
                 else
                 {
+                    Console.WriteLine("Only one match pattern");
                     if (pattern.Terminator != null)
                     {
                         pattern._currentState = new CheckingForTerminator();
                     }
                     else
                     {
+                        Console.WriteLine("No terminator, completing");
                         pattern._currentState = new Completed();
+                        pattern._currentState.GetState(pattern,ch);
                     }
-                    
-                   
                 }
             }
             else
