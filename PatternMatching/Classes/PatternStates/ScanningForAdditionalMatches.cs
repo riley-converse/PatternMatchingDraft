@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace PatternMatching.Classes.PatternStates
 {
-    internal class ScaningForAdditionalMatches : IState
+    internal class ScanningForAdditionalMatches : IState
     {
         
-        public void GetState(Pattern pattern, char ch)
+        public void GetState(IPatternMatcher pattern, char ch)
         {
             Console.WriteLine("Scanning:" +ch);
             if (ContainsMatch(pattern, ch)) 
@@ -21,25 +21,24 @@ namespace PatternMatching.Classes.PatternStates
                     Console.WriteLine("reached end");
                     if (pattern.Terminator is null)
                     {
-                        pattern._currentState = new Completed();
-                        pattern._currentState.GetState(pattern, ch);
+                        pattern.CurrentState = new Completed();
+                        pattern.CurrentState.GetState(pattern, ch);
                     }
                     else
                     {
-                        pattern._currentState = new CheckingForTerminator();
+                        pattern.CurrentState = new CheckingForTerminator();
                     }
                 }
             }
             else
             {
-                pattern._currentState = new Listening();
+                pattern.CurrentState = new Listening();
                 pattern.MatchedBoundary.StartIndex = -1;
-                pattern._currentState.GetState(pattern, ch);
-                pattern.RanONcePre = true;
+                pattern.CurrentState.GetState(pattern, ch);
             }
         }
 
-        public bool ContainsMatch(Pattern pattern, char ch)
+        public bool ContainsMatch(IPatternMatcher pattern, char ch)
         {
             Console.WriteLine("Pattern CharGroup Index: "+pattern.CharGroupIndex);
             Console.WriteLine("Against: " + pattern.Definitions[pattern.CharGroupIndex]);
@@ -53,7 +52,7 @@ namespace PatternMatching.Classes.PatternStates
             return false;
         }
 
-        public bool ReachedEndOfCharGroupArray(Pattern pattern, char ch)
+        public bool ReachedEndOfCharGroupArray(IPatternMatcher pattern, char ch)
         {
             Console.WriteLine(pattern.Definitions.Length + " and " + pattern.CharGroupIndex);
             if (pattern.Definitions.Length <= pattern.CharGroupIndex)

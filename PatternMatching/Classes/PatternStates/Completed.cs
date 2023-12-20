@@ -9,7 +9,7 @@ namespace PatternMatching.Classes.PatternStates
 {
     internal class Completed : IState
     {
-        public void GetState(Pattern pattern, char ch)
+        public void GetState(IPatternMatcher pattern, char ch)
         {
   
             if (pattern.Terminator is null)

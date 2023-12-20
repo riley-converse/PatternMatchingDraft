@@ -9,19 +9,19 @@ namespace PatternMatching.Classes.PatternStates
 {
     internal class Listening : IState
     {
-        public void GetState(Pattern pattern, char ch)
+        public void GetState(IPatternMatcher pattern, char ch)
         {
             if (MeetsPrerequisite(pattern, ch))
             {
                 Console.WriteLine("Meets pre");
-                pattern._currentState = new LookingForFirstMatch();
-                if (pattern.CurrentCharIndex == 0 && pattern.Prerequisite is not null ) {  pattern._currentState.GetState(pattern, ch); }
+                pattern.CurrentState = new LookingForFirstMatch();
+                if (pattern.CurrentCharIndex == 0 && pattern.Prerequisite is not null ) {  pattern.CurrentState.GetState(pattern, ch); }
             }
         }
 
-        public bool MeetsPrerequisite(Pattern pattern, char ch)
+        public bool MeetsPrerequisite(IPatternMatcher pattern, char ch)
         {
-            if (pattern.PrerequisiteMet || pattern.Prerequisite is null) { return true; }
+            if (pattern.Prerequisite is null) { return true; }
             else if (pattern.CurrentCharIndex == 0 && pattern.Prerequisite.ContainsChar('\\')) { return true; }
             else
             {

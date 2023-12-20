@@ -6,10 +6,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualBasic.CompilerServices;
+using PatternMatching.Interfaces;
 
 namespace PatternMatching.Classes
 {
-    internal class CharGroup : ICloneable
+    internal class CharGroup : ICharCollection, ICloneable
     {
         public char[] Definition { get; private set; }
 

@@ -8,49 +8,47 @@ using System.Threading.Tasks;
 
 namespace PatternMatching.Classes
 {
-    internal class Pattern
+    internal class Pattern : IPatternMatcher
     {
-        public CharGroup[] Definitions { get; private set; }
-        public CharGroup? Prerequisite { get; private set; } = null;
-        public CharGroup? Terminator { get; private set; } = null;
+        public ICharCollection[]? Definitions { get; set; }
+        public ICharCollection? Prerequisite { get; set; } = null;
+        public ICharCollection? Terminator { get; set; } = null;
 
         public bool PrerequisiteMet { get; set; } = true;
         public bool UsingTerminator { get; set; } = true;
 
-        public bool Active = true;
-
-        public bool RanONcePre = false;
+        public bool Active { get; set; } = true;
 
         public List<IState> PStates { get; set; }
         public StringBoundary MatchedBoundary { get; set; } = new StringBoundary();
         public int CurrentCharIndex { get; set; } = 0;
         public int CharGroupIndex { get; set; } = 0;
 
-        public IState _currentState = new Listening();
+        public IState CurrentState { get; set; } = new Listening();
 
-        public Pattern(params CharGroup[] definitions) 
+        public Pattern(params ICharCollection[] definitions) 
         { 
             Definitions = definitions;
             PStates = new List<IState>();
         }
 
-        public void AddCharGroup(params CharGroup[] definitions)
+        public void AddCharGroup(params ICharCollection[] definitions)
         {
-            CharGroup[] referenceTemp = Definitions;
-            CharGroup[] parameterTemp = definitions;
+            ICharCollection[] referenceTemp = Definitions;
+            ICharCollection[] parameterTemp = definitions;
 
-            Definitions = new CharGroup[referenceTemp.Length + parameterTemp.Length];
+            Definitions = new ICharCollection[referenceTemp.Length + parameterTemp.Length];
             referenceTemp.CopyTo(Definitions, 0);
             parameterTemp.CopyTo(Definitions, referenceTemp.Length);
         }
 
-        public void AddPrerequisite(CharGroup prequisite)
+        public void AddPrerequisite(ICharCollection prequisite)
         {
             Prerequisite = prequisite;
             PrerequisiteMet = false;
         }
 
-        public void AddTerminiator(CharGroup terminator)
+        public void AddTerminiator(ICharCollection terminator)
         {
             Terminator = terminator;
             UsingTerminator = false;
@@ -60,7 +58,7 @@ namespace PatternMatching.Classes
         {
             if (Active)
             {
-                _currentState.GetState(this, ch);
+                CurrentState.GetState(this, ch);
                 CurrentCharIndex++;
 
             }

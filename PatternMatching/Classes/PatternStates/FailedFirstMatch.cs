@@ -9,25 +9,23 @@ namespace PatternMatching.Classes.PatternStates
 {
     internal class FailedFirstMatch : IState
     {
-        public void GetState(Pattern pattern, char ch)
+        public void GetState(IPatternMatcher pattern, char ch)
         {
             if (MeetsPrerequisite(pattern,ch)) 
             {
-                pattern._currentState = new LookingForFirstMatch();
+                pattern.CurrentState = new LookingForFirstMatch();
             }
             else
             {
-                pattern._currentState = new Listening();
+                pattern.CurrentState = new Listening();
             }
         }
 
-        public bool MeetsPrerequisite(Pattern pattern, char ch)
+        public bool MeetsPrerequisite(IPatternMatcher pattern, char ch)
         {
-            if (pattern.PrerequisiteMet || pattern.Prerequisite is null) { return true; }
-            else
-            {
-                return pattern.Prerequisite.ContainsChar(ch);
-            }
+            if (pattern.Prerequisite == null) { return true; }
+            return pattern.Prerequisite.ContainsChar(ch);
+            
 
         }
     }

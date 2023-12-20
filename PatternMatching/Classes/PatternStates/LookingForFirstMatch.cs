@@ -9,39 +9,39 @@ namespace PatternMatching.Classes.PatternStates
 {
     internal class LookingForFirstMatch : IState
     {
-        public void GetState(Pattern pattern, char ch)
+        public void GetState(IPatternMatcher pattern, char ch)
         {
             if (FoundFirstMatch(pattern,ch))
             {
                 if (pattern.Definitions.Length > 1)
                 {
-                    pattern._currentState = new ScaningForAdditionalMatches();
+                    pattern.CurrentState = new ScanningForAdditionalMatches();
                 }
                 else
                 {
                     Console.WriteLine("Only one match pattern");
                     if (pattern.Terminator != null)
                     {
-                        pattern._currentState = new CheckingForTerminator();
+                        pattern.CurrentState = new CheckingForTerminator();
                     }
                     else
                     {
                         Console.WriteLine("No terminator, completing");
-                        pattern._currentState = new Completed();
-                        pattern._currentState.GetState(pattern,ch);
+                        pattern.CurrentState = new Completed();
+                        pattern.CurrentState.GetState(pattern,ch);
                     }
                 }
             }
             else
             {
-                pattern._currentState = new FailedFirstMatch();
+                pattern.CurrentState = new FailedFirstMatch();
                 Console.WriteLine("Going back to listening for :"+ch);
-                pattern._currentState.GetState(pattern, ch);
+                pattern.CurrentState.GetState(pattern, ch);
             }
 
         }
 
-        public bool FoundFirstMatch(Pattern pattern, char ch)
+        public bool FoundFirstMatch(IPatternMatcher pattern, char ch)
         {
             pattern.CharGroupIndex = 0;
             if (pattern.Definitions[pattern.CharGroupIndex].ContainsChar(ch))
