@@ -162,6 +162,7 @@ namespace PatternMatching
             if (terminator is not null)
                 userPattern.AddTerminiator(terminator);
 
+            Console.Clear();
 
             int anIndex = 0;
             foreach (char c in userInputString)
@@ -171,7 +172,7 @@ namespace PatternMatching
                 anIndex++;
             }
 
-            Console.Clear();
+            
             Console.WriteLine("Input: " + userInputString);
             Console.WriteLine("Prerequisite: " + prerequisite?.ToString());
             Console.WriteLine("Terminator: " + terminator?.ToString());
