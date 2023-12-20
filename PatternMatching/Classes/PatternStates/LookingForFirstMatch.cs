@@ -19,7 +19,6 @@ namespace PatternMatching.Classes.PatternStates
                 }
                 else
                 {
-                    Console.WriteLine("Only one match pattern");
                     if (pattern.Terminator != null)
                     {
                         pattern.CurrentState = new CheckingForTerminator();

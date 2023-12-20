@@ -37,8 +37,7 @@ namespace PatternMatching.Classes
         {
             
             char[] mainArray = Definition;
-            char[] secondaryArray;
-            secondaryArray = ClearArrayDuplicates(toRemove);
+            var secondaryArray = ClearArrayDuplicates(toRemove);
             
             bool foundMatch = false;
             char[] temp = new char[mainArray.Length];
@@ -164,7 +163,7 @@ namespace PatternMatching.Classes
         public static CharGroup operator -(CharGroup groupA, CharGroup groupB)
         {
             groupA = (CharGroup)groupA.MemberwiseClone();
-            groupA.AppendDefinition(groupB.Definition);
+            groupA.RemoveDefinition(groupB.Definition);
             groupA._inverted = (groupB._inverted || groupA._inverted);
 
             return groupA;
