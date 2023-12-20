@@ -28,12 +28,13 @@ namespace PatternMatching.Classes.PatternStates
                         pattern._currentState = new Completed();
                     }
                     
-                    pattern._currentState.GetState(pattern, ch);
+                   
                 }
             }
             else
             {
-                pattern._currentState = new Listening();
+                pattern._currentState = new FailedFirstMatch();
+                Console.WriteLine("Going back to listening for :"+ch);
                 pattern._currentState.GetState(pattern, ch);
             }
 
@@ -44,7 +45,7 @@ namespace PatternMatching.Classes.PatternStates
             pattern.CharGroupIndex = 0;
             if (pattern.Definitions[pattern.CharGroupIndex].ContainsChar(ch))
             {
-                Console.WriteLine("Found first match: " +ch);
+                Console.WriteLine($"Found first match:[{ch}]");
                 pattern.MatchedBoundary.StartIndex = pattern.CurrentCharIndex;
                 pattern.CharGroupIndex++;
                 return true;

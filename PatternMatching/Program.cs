@@ -44,8 +44,8 @@ namespace PatternMatching
 
             // pattern testing
             string input = "remember cool the < html place of <! and such 3<html> so that<html style> ";
-            Pattern htmlTagPattern = new (operators, !operators);
-            htmlTagPattern.AddPrerequisite(space);
+            Pattern htmlTagPattern = new (letter);
+            htmlTagPattern.AddPrerequisite(leftCarrot);
             htmlTagPattern.AddTerminiator(space);
             // space + operators
 

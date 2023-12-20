@@ -32,7 +32,7 @@ namespace PatternMatching.Classes.PatternStates
             Console.WriteLine("ch: " +ch);
             if (pattern.Terminator.ContainsChar(ch))
             {
-                Console.WriteLine("TRUE: ch");
+                Console.WriteLine($"Terminator Required and Satisified:[{ch}]");
                 return true;
             }
             return false;

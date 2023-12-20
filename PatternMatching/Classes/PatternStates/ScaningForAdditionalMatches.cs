@@ -35,6 +35,7 @@ namespace PatternMatching.Classes.PatternStates
                 pattern._currentState = new Listening();
                 pattern.MatchedBoundary.StartIndex = -1;
                 pattern._currentState.GetState(pattern, ch);
+                pattern.RanONcePre = true;
             }
         }
 

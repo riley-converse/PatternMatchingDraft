@@ -21,6 +21,7 @@ namespace PatternMatching.Classes
 
         public bool RanONcePre = false;
 
+        public List<IState> PStates { get; set; }
         public StringBoundary MatchedBoundary { get; set; } = new StringBoundary();
         public int CurrentCharIndex { get; set; } = 0;
         public int CharGroupIndex { get; set; } = 0;
@@ -30,6 +31,7 @@ namespace PatternMatching.Classes
         public Pattern(params CharGroup[] definitions) 
         { 
             Definitions = definitions;
+            PStates = new List<IState>();
         }
 
         public void AddPrerequisite(CharGroup prequisite)
