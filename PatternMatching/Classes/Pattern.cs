@@ -60,7 +60,6 @@ namespace PatternMatching.Classes
             {
                 CurrentState.GetState(this, ch);
                 CurrentCharIndex++;
-
             }
         }
     }

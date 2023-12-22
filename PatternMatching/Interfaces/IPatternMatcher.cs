@@ -17,5 +17,7 @@ namespace PatternMatching.Interfaces
         public int CurrentCharIndex { get; set; }
         public int CharGroupIndex { get; set; }
         public StringBoundary MatchedBoundary { get; set; }
+
+        public void ProcessChar(char ch);
     }
 }
