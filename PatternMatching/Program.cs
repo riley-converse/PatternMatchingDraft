@@ -5,7 +5,7 @@ namespace PatternMatching
     internal class Program
     {
         // driver
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             CharGroup letter = new CharGroup('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
                 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
@@ -13,12 +13,12 @@ namespace PatternMatching
             CharGroup integers = new CharGroup('1', '2', '3');
             CharGroup operators = new CharGroup('!', '>', '<', '.');
 
-            string userInputString;
+            char[] userInputString;
+            InputHandler inputHandler = new InputHandler("C:\\Users\\riley.k.converse\\source\\repos\\PatternMatching\\PatternMatching\\inputFile.html");
+            userInputString = await inputHandler.ReadChunk(124);
+
             string userChoice;
             Console.WriteLine("Pattern Driver");
-
-            Console.WriteLine("Enter Input to Test: ");
-            userInputString = Console.ReadLine() + " ";
 
 
             Console.Clear();
